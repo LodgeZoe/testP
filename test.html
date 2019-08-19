@@ -1,0 +1,133 @@
+<!Doctype>
+<html>
+<header>
+	<meta charset="utf-8">
+</header>
+<style type="text/css">
+	*{margin: 0px;padding: 0px}
+</style>
+<script type="text/javascript">
+var xflag = 1;
+var yflag = 1;
+window.onload = function()
+{
+	// square();
+	circle();
+}
+function circle()
+{
+	var sx = 200;
+	var sy = 200;
+	var rx = 300;
+	var ry = 200;
+	var r = 100;
+	var a = document.getElementById('a');
+	var x = a.offsetLeft;// 200=< x <=400
+	var y = a.offsetTop; // 100<= y <=300
+	a.style.left = sx+'px';
+	a.style.top = sy+'px';
+	var timer = window.setInterval(function()
+	{
+		var a = document.getElementById('a');
+		var x = a.offsetLeft;
+		var y = a.offsetTop;
+		if(x==rx+r)
+		{
+			xflag = 2;
+			// window.clearInterval(timer);
+			// return false;
+		}else if(x==sx)
+		{
+			xflag = 1;
+		}
+		if(x>=rx && xflag == 1)
+		{
+			yflag = 2;
+		}else if(xflag==2 && x<rx)
+		{
+			yflag = 1;
+		}
+		if(xflag==1 && yflag ==1)
+		{
+			x++;
+			y = deal(Math.sqrt(Math.pow(r,2)-Math.pow(x-rx,2))-ry);
+			a.style.left = x+'px';
+			a.style.top = y+'px';
+			console.log('a');
+		}else if(xflag ==1 && yflag==2)
+		{
+			x++;
+			y = deal(Math.sqrt(Math.pow(r,2)-Math.pow(x-rx,2))-ry);
+			a.style.left = x+'px';
+			a.style.top = y +'px';
+			console.log('b');
+		}else if(xflag == 2 && yflag==2)
+		{
+			x--;
+			y = deal(Math.sqrt(Math.pow(r,2)-Math.pow(x-rx,2))-ry);
+			a.style.left = x+'px';
+			a.style.top = (2*ry-y)+'px';
+			console.log('c');
+		}else if(xflag == 2 && yflag==1)
+		{
+			x--;
+			y = deal(Math.sqrt(Math.pow(r,2)-Math.pow(x-rx,2))-ry);
+			a.style.left = x+'px';
+			a.style.top = (2*ry-y)+'px';
+			console.log('d');
+		}
+		console.log('x:'+x);
+		console.log('y:'+y);
+	},10)
+}
+function square()
+{
+	var sx = 200;
+	var sy = 200;
+	var mv = 100;
+	var a = document.getElementById('a');
+	var x = a.offsetLeft;
+	var y = a.offsetTop;
+	a.style.left = sx+'px';
+	a.style.top = sy+'px';
+	var timer = window.setInterval(function()
+	{
+		var a = document.getElementById('a');
+		var x = a.offsetLeft;
+		var y = a.offsetTop;
+		if(x<(sx+mv) && y==sy)
+		{
+			x++;
+			a.style.left = x+'px';
+		}else if(x==(sx+mv) && y<(sy+mv))
+		{
+			y++;
+			a.style.top = y+'px';
+		}else if(y==(sy+mv) && x>sx)
+		{
+			x--;
+			a.style.left = x+'px';
+		}else
+		{
+			y--;
+			a.style.top = y+'px';
+		}
+		// console.log(x);
+		// console.log(y);
+	},1)
+}
+function deal(num)
+{
+	var result = parseFloat(num);
+	if (isNaN(result)) {
+		console.log(result+'传递参数错误，请检查！');
+		return false;
+	}
+	var result = Math.round(num * 100) / 100;
+	return Math.abs(result);
+}
+</script>
+<body>
+	<div id='a' style="position: relative;width:15px;height:15px;background-color: lightgreen">&nbsp;</div>
+</body>
+</html>
